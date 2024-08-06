@@ -1,24 +1,50 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
 
-import { Grid } from "@mui/material"
+import { Grid, InputAdornment, TextField } from "@mui/material"
 import DisplayMovie from "./components/DisplayMovie"
+import { MoviesJson } from "./MOVIES"
+import { Search } from "@mui/icons-material"
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [filterTitle, setFilterTitle] = useState(undefined)
 
   return (
-    <>
-      <Grid container spacing={2}>
-        <DisplayMovie title="O poderoso chefão" genre="Drama" director="Coppola" image="https://m.media-amazon.com/images/I/61MwEEt+NXL._AC_UF894,1000_QL80_.jpg"/>
-        <DisplayMovie title="Vingadores I" genre="Drama" director="Coppola" image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs4iZjqn8SwH-88NOBw_qlQiEKklr_xK7R7A&s"/>
-        <DisplayMovie title="Vingadores II" genre="Drama" director="Coppola" image="https://a-static.mlcdn.com.br/450x450/poster-cartaz-vingadores-ultimato-g-pop-arte-poster/poparteskins2/15938530185/6a399da32ef3a95b75b751695b5287eb.jpeg"/>
-        <DisplayMovie title="Vingadores III" genre="Drama" director="Coppola" image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEBZr4n6ux-CIABBn-QFKqOSb_DXS-C2xEVuEGSmLaOgQ62V9ErByRymEDGY5x-ZCCQZ8&usqp=CAU"/>
-      
+    <Grid container justifyContent="center" mt={5}>
+      <TextField
+        id="input-with-icon-textfield"
+        label="Busque um filme"
+        style={{width: 400}}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Search />
+            </InputAdornment>
+          ),
+        }}
+        variant="outlined"
+        onChange={(event) => setFilterTitle(event.target.value)}
+      />
+
+      <Grid justifyContent={"center"} alignItems={"center"} container spacing={2} mt={5}>
+        {console.log("filter", filterTitle)}
+        {MoviesJson
+        .filter(movie => {
+            if (filterTitle) {
+              if (movie.title.toLowerCase().startsWith(filterTitle.toLowerCase())) {
+                return movie
+              }
+            } else {
+              return movie
+            }
+        })
+        .map(movie => (
+          <DisplayMovie key={movie.title} title={movie.title} genre={movie.genre} director={movie.director} image={movie.image}/>
+        ))}
       </Grid>
-    </>
+    </Grid>
   )
 }
 

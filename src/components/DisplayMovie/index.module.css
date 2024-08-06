@@ -1,0 +1,19 @@
+.card{
+    /* background-color: blue; */
+    border-radius: 10px;
+    -webkit-box-shadow: 10px 10px 36px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 36px -11px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 36px -11px rgba(0,0,0,0.75);
+    max-width: 400px;
+}
+
+.title {
+    font-weight: 800;
+    font-size: 20px;
+    word-break: break-all;
+}
+
+.infos {
+    color: gray;
+    font-size: 16px;
+}
