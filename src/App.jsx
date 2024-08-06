@@ -10,6 +10,22 @@ import { Search } from "@mui/icons-material"
 
 function App() {
   const [filterTitle, setFilterTitle] = useState(undefined)
+  const [movies, setMovies] = useState(MoviesJson)
+
+
+  function favoriteMovie (title, isFavorite) {
+    console.log(title)
+    const newMovies = movies.map(movie => {
+      if(movie.title === title) {
+        movie.isFavorite = isFavorite
+      }
+      return movie
+    })
+
+    setMovies(newMovies);
+
+    console.log(movies)
+  }
 
   return (
     <Grid container justifyContent="center" mt={5}>
@@ -27,10 +43,8 @@ function App() {
         variant="outlined"
         onChange={(event) => setFilterTitle(event.target.value)}
       />
-
       <Grid justifyContent={"center"} alignItems={"center"} container spacing={2} mt={5}>
-        {console.log("filter", filterTitle)}
-        {MoviesJson
+        {movies
         .filter(movie => {
             if (filterTitle) {
               if (movie.title.toLowerCase().startsWith(filterTitle.toLowerCase())) {
@@ -41,7 +55,14 @@ function App() {
             }
         })
         .map(movie => (
-          <DisplayMovie key={movie.title} title={movie.title} genre={movie.genre} director={movie.director} image={movie.image}/>
+          <DisplayMovie 
+            key={movie.title} 
+            title={movie.title} 
+            genre={movie.genre} 
+            director={movie.director} 
+            image={movie.image}
+            isFavorite={movie.isFavorite} 
+            setFavorite={favoriteMovie}/>
         ))}
       </Grid>
     </Grid>
